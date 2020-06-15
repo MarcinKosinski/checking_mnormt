@@ -1,0 +1,9 @@
+Package: testpackage
+Title: Test
+Version: 0.1.0
+Authors@R: c(person("Marcin", "Kosinski", email = "m.p.kosinski@gmail.com", role = c("aut", "cre")))
+Maintainer: Marcin Kosinski <m.p.kosinski@gmail.com>
+Description: A package to make mnormt installation with GitHub actions crush.
+Imports: NMF
+License: GPL-2
+  
