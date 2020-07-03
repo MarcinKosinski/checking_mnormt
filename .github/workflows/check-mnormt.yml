@@ -62,7 +62,7 @@ jobs:
           renv::restore()            
       - name: Preconfiguration for installations
         run: |
-          install.packages(c("remotes", "rcmdcheck", "devtools"))
+          renv::install(c("remotes", "rcmdcheck", "devtools"))
         shell: Rscript {0}  
       - name: Install linux system dependencies with sysreqs
         if: runner.os == 'Linux'
@@ -75,8 +75,8 @@ jobs:
           sudo -s eval "$sysreqs"
       - name: Install dependencies for the package
         run: |
-          install.packages("mnormt")
-          install.packages("BiocManager")
+          renv::install("mnormt")
+          renv::install("BiocManager")
           BiocManager::install("Biobase")
           installed.packages()
           remotes::install_deps(pkgdir = ".", dependencies = c('Imports', 'Suggests'), repos = c(getOption("repos"), "http://cloudyr.github.io/drat"))  
