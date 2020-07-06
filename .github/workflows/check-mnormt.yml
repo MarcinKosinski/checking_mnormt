@@ -32,6 +32,19 @@ jobs:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()    
+          
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+          
       - uses: actions/cache@v2
         id: cache
         if: startsWith(runner.os, 'Linux')
@@ -40,15 +53,15 @@ jobs:
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
           restore-keys: |
             ${{ runner.os }}-renv-
+            
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-2-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-2-
 
-      - name: Restore packages
-        if: steps.cache.outputs.cache-hit != 'true'
-        shell: Rscript {0}
-        run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()            
       - name: Preconfiguration for installations
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           renv::install(c("remotes", "rcmdcheck", "devtools"))
         shell: Rscript {0}  
@@ -62,7 +75,6 @@ jobs:
           echo $sysreqs
           sudo -s eval "$sysreqs"
       - name: Install dependencies for the package
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           renv::install("mnormt")
           renv::install("BiocManager")
