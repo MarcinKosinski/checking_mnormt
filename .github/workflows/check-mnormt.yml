@@ -41,6 +41,7 @@ jobs:
           
       - name: Query dependencies
         run: |
+          options(repos = c(CRAN = "https://cran.rstudio.com/", CLOUDYR = "http://cloudyr.github.io/drat"))
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
