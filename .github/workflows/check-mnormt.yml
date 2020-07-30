@@ -55,10 +55,12 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           echo $sysreqs
           sudo -s eval "$sysreqs"
-      - name: Install dependencies for the package
+      - name: Install dependencies for the package - remotes
         run: |
           remotes::install_deps(pkgdir = ".", dependencies = c('Imports', 'Suggests'), repos = c(getOption("repos"), "http://cloudyr.github.io/drat"))  
-          devtools::install('packages/g6tr', quick = TRUE, dependencies = c('Imports', 'Suggests'))
+      - name: Install dependencies for the package - devtools
+        run: |          
+          devtools::install('.', quick = TRUE, dependencies = c('Imports', 'Suggests'))
         shell: Rscript {0}
       - name: Check the package
         run: rcmdcheck::rcmdcheck(path = ".", args = "--no-manual", error_on = "error", check_dir = "check")
