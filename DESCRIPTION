@@ -6,10 +6,8 @@ Maintainer: Marcin Kosinski <m.p.kosinski@gmail.com>
 Description: A package to make mnormt installation with GitHub actions crush.
 Imports: 
     devtools,
-    tidyr,
     dplyr,
     magrittr,
-    purrr,
     stringr,
     tools,
     aws.s3,
@@ -17,10 +15,8 @@ Imports:
     pkgload,
     utils,
     tibble,
-    rlang,
     lubridate,
     stringi,
-    BiocManager,
     yaml
 Suggests:
     knitr,
