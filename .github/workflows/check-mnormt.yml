@@ -57,7 +57,8 @@ jobs:
           sudo -s eval "$sysreqs"
       - name: Install dependencies for the package - remotes
         run: |
-          remotes::install_deps(pkgdir = ".", dependencies = c('Imports', 'Suggests'), repos = c(getOption("repos"), "http://cloudyr.github.io/drat"))  
+          remotes::install_deps(pkgdir = ".", dependencies = c('Imports', 'Suggests'), repos = c(getOption("repos"), "http://cloudyr.github.io/drat")) 
+        shell: Rscript {0} 
       - name: Install dependencies for the package - devtools
         run: |          
           devtools::install('.', quick = TRUE, dependencies = c('Imports', 'Suggests'))
