@@ -38,7 +38,7 @@ jobs:
       - name: Query dependencies
         run: |
           options(repos = c(CRAN = "https://cran.rstudio.com/", CLOUDYR = "http://cloudyr.github.io/drat"))
-          install.packages(c('remotes', 'devtools'))
+          install.packages(c('remotes', 'devtools', 'renv'))
         shell: Rscript {0}
           
 
